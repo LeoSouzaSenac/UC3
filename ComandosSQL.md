@@ -1,0 +1,30 @@
+CREATE DATABASE IF NOT EXISTS lojaLeo;
+
+USE lojaLeo;
+
+CREATE TABLE IF NOT EXISTS clientes (
+    id_cliente INT PRIMARY KEY,
+    nome VARCHAR(100),
+    email VARCHAR(100)
+);
+
+CREATE TABLE IF NOT EXISTS pedidos (
+    id_pedido INT PRIMARY KEY,
+    descricao VARCHAR(200),
+    valor DECIMAL(10, 2),
+    id_cliente INT,
+    FOREIGN KEY (id_cliente) REFERENCES clientes(id_cliente)
+);
+
+
+-- Inserindo valores na tabela clientes com INSERT IGNORE INTO
+INSERT IGNORE INTO clientes (id_cliente, nome, email) VALUES
+(1, 'João Silva', 'joao@example.com'),
+(2, 'Maria Oliveira', 'maria@example.com'),
+(3, 'Pedro Santos', 'pedro@example.com');
+
+-- Inserindo valores na tabela pedidos com INSERT IGNORE INTO
+INSERT IGNORE INTO pedidos (id_pedido, descricao, valor, id_cliente) VALUES
+(101, 'Compra de móveis', 1500.00, 1),
+(102, 'Pedido de eletrônicos', 2500.50, 2),
+(103, 'Serviços de instalação', 500.75, 3);
