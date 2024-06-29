@@ -54,3 +54,31 @@ ADD COLUMN telefone VARCHAR(15);
 UPDATE clientes
 SET telefone = 5199999999
 WHERE id_cliente = 1;
+
+
+
+
+CREATE TABLE IF NOT EXISTS Produtos (
+    id_produto INT PRIMARY KEY AUTO_INCREMENT,
+    nome_produto VARCHAR(100),
+    preco_unitario DECIMAL(10, 2)
+);
+
+CREATE TABLE IF NOT EXISTS ItensDePedido (
+    id_item INT PRIMARY KEY AUTO_INCREMENT,
+    id_pedido INT,
+    id_produto INT,
+    quantidade INT,
+    preco_unitario DECIMAL(10, 2),
+    FOREIGN KEY (id_pedido) REFERENCES Pedidos(id_pedido),
+    FOREIGN KEY (id_produto) REFERENCES Produtos(id_produto)
+);
+
+CREATE TABLE IF NOT EXISTS Pagamentos (
+    id_pagamento INT PRIMARY KEY AUTO_INCREMENT,
+    id_pedido INT,
+    metodo_pagamento VARCHAR(50),
+    valor_pagamento DECIMAL(10, 2),
+    data_pagamento DATE,
+    FOREIGN KEY (id_pedido) REFERENCES Pedidos(id_pedido)
+);
