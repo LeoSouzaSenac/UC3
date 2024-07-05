@@ -129,3 +129,79 @@ INSERT IGNORE INTO Clientes (ClienteID, Nome, Endereco, Telefone) VALUES
 ```
 </details>
 
+### 4. 🔄 Alteração das Tabelas
+Adicione novas colunas às tabelas Autores, Livros, Clientes e Emprestimos.
+📖 Tabela de Autores
+Adicione as colunas:
+DataNascimento (data)
+Biografia (texto)
+<details>
+<summary>💡 Dica: Como adicionar colunas à tabela de autores</summary>
+sql
+Copiar código
+ALTER TABLE Autores
+ADD COLUMN DataNascimento DATE,
+ADD COLUMN Biografia TEXT;
+</details>
+📚 Tabela de Livros
+Adicione as colunas:
+Editora (texto)
+NumeroPaginas (inteiro)
+Idioma (texto)
+<details>
+<summary>💡 Dica: Como adicionar colunas à tabela de livros</summary>
+sql
+Copiar código
+ALTER TABLE Livros
+ADD COLUMN Editora VARCHAR(100),
+ADD COLUMN NumeroPaginas INT,
+ADD COLUMN Idioma VARCHAR(50);
+</details>
+🧑‍🤝‍🧑 Tabela de Clientes
+Adicione as colunas:
+Email (texto)
+DataNascimento (data)
+<details>
+<summary>💡 Dica: Como adicionar colunas à tabela de clientes</summary>
+sql
+Copiar código
+ALTER TABLE Clientes
+ADD COLUMN Email VARCHAR(100),
+ADD COLUMN DataNascimento DATE;
+</details>
+📅 Tabela de Empréstimos
+Adicione as colunas:
+DataPrevistaDevolucao (data)
+Status (texto)
+<details>
+<summary>💡 Dica: Como adicionar colunas à tabela de empréstimos</summary>
+sql
+Copiar código
+ALTER TABLE Emprestimos
+ADD COLUMN DataPrevistaDevolucao DATE,
+ADD COLUMN Status VARCHAR(20);
+</details>
+
+### 5. ✍️ Inserção de Dados nas Novas Colunas
+Atualize os dados existentes para incluir valores nas novas colunas.
+<details>
+<summary>💡 Dica: Como atualizar dados nas novas colunas</summary>
+sql
+Copiar código
+UPDATE Autores
+SET DataNascimento = '1965-07-31', Biografia = 'J.K. Rowling é uma escritora britânica, autora da série Harry Potter.'
+WHERE AutorID = 1;
+
+UPDATE Livros
+SET Editora = 'Bloomsbury', NumeroPaginas = 223, Idioma = 'Inglês'
+WHERE LivroID = 1;
+
+UPDATE Clientes
+SET Email = 'ana.silva@example.com', DataNascimento = '1980-01-15'
+WHERE ClienteID = 1;
+
+UPDATE Emprestimos
+SET DataPrevistaDevolucao = '2023-07-15', Status = 'Em andamento'
+WHERE EmprestimoID = 1;
+</details>
+
