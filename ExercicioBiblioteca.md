@@ -134,7 +134,7 @@ Adicione novas colunas às tabelas Autores, Livros, Clientes e Emprestimos.
 
 #### 📖 Tabela de Autores
 Adicione as colunas:
-DataNascimento (data)
+DataNascimento (data),
 Biografia (texto)
 <details>
 <summary>💡 Dica: Como adicionar colunas à tabela de autores</summary>
@@ -147,8 +147,8 @@ ADD COLUMN Biografia TEXT;
 
 #### 📚 Tabela de Livros
 Adicione as colunas:
-Editora (texto)
-NumeroPaginas (inteiro)
+Editora (texto),
+NumeroPaginas (inteiro),
 Idioma (texto)
 <details>
 <summary>💡 Dica: Como adicionar colunas à tabela de livros</summary>
@@ -162,7 +162,7 @@ ADD COLUMN Idioma VARCHAR(50);
 
 #### 🧑‍🤝‍🧑 Tabela de Clientes
 Adicione as colunas:
-Email (texto)
+Email (texto),
 DataNascimento (data)
 <details>
 <summary>💡 Dica: Como adicionar colunas à tabela de clientes</summary>
@@ -175,7 +175,7 @@ ADD COLUMN DataNascimento DATE;
 
 #### 📅 Tabela de Empréstimos
 Adicione as colunas:
-DataPrevistaDevolucao (data)
+DataPrevistaDevolucao (data),
 Status (texto)
 <details>
 <summary>💡 Dica: Como adicionar colunas à tabela de empréstimos</summary>
