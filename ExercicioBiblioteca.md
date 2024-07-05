@@ -131,7 +131,8 @@ INSERT IGNORE INTO Clientes (ClienteID, Nome, Endereco, Telefone) VALUES
 
 ### 4. 🔄 Alteração das Tabelas
 Adicione novas colunas às tabelas Autores, Livros, Clientes e Emprestimos.
-📖 Tabela de Autores
+
+#### 📖 Tabela de Autores
 Adicione as colunas:
 DataNascimento (data)
 Biografia (texto)
@@ -143,7 +144,8 @@ ALTER TABLE Autores
 ADD COLUMN DataNascimento DATE,
 ADD COLUMN Biografia TEXT;
 </details>
-📚 Tabela de Livros
+
+#### 📚 Tabela de Livros
 Adicione as colunas:
 Editora (texto)
 NumeroPaginas (inteiro)
@@ -157,7 +159,8 @@ ADD COLUMN Editora VARCHAR(100),
 ADD COLUMN NumeroPaginas INT,
 ADD COLUMN Idioma VARCHAR(50);
 </details>
-🧑‍🤝‍🧑 Tabela de Clientes
+
+#### 🧑‍🤝‍🧑 Tabela de Clientes
 Adicione as colunas:
 Email (texto)
 DataNascimento (data)
@@ -169,7 +172,8 @@ ALTER TABLE Clientes
 ADD COLUMN Email VARCHAR(100),
 ADD COLUMN DataNascimento DATE;
 </details>
-📅 Tabela de Empréstimos
+
+#### 📅 Tabela de Empréstimos
 Adicione as colunas:
 DataPrevistaDevolucao (data)
 Status (texto)
