@@ -1,7 +1,7 @@
 # 📚 Exercício Clássico: Banco de Dados de uma Livraria
 
 ## 🎯 Objetivo
-Criar e manipular um banco de dados de uma livraria, incluindo tabelas para autores, livros, clientes e empréstimos. Realizar operações básicas de inserção, atualização, exclusão e consultas.
+Criar e manipular um banco de dados de uma livraria, incluindo tabelas para autores, livros, clientes e empréstimos. 
 
 ## 📝 Passos
 
