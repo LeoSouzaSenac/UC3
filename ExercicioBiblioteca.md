@@ -129,12 +129,3 @@ INSERT IGNORE INTO Clientes (ClienteID, Nome, Endereco, Telefone) VALUES
 ```
 </details>
 
-
-
--- Excluir banco de dados
-DROP DATABASE IF EXISTS Livraria;
-```
-</details>
-```
-
-Este formato deve tornar o enunciado mais envolvente e interativo para os alunos.
