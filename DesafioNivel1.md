@@ -18,5 +18,5 @@
 
 8. **Altere todos os registros, com exceção do ID 2, para identificar que está sem estoque.**
 
-9. **Monte um relatório (um `SELECT`) dos 5 primeiros registros de acordo com a ordem de inserção (do menor ID para o maior ID) e de acordo com o status da coluna `Desativado`.**
+9. **Monte um relatório (um `SELECT`) dos 5 primeiros registros de acordo com a ordem de inserção (do menor ID para o maior ID) e de acordo com o status da coluna `SemEstoque`.**
 
