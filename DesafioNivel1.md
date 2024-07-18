@@ -2,7 +2,7 @@
 
 ## Instruções
 
-1. **Crie uma base de dados com nome `Desafio`.**
+1. **Crie uma base de dados com nome `Desafio + nome do aluno`.**
 
 2. **Crie uma tabela para armazenar as características dos produtos, como nome, categoria, preço, etc.**
 
