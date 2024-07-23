@@ -14,7 +14,7 @@
 
 6. **Exclua o 4º registro e o 7º registro da tabela.**
 
-7. **Adicione uma coluna na tabela chamada `Sem estoque` para armazenar se há o produto em estoque ou não (sugestão que seja um flag – verdadeiro ou falso).**
+7. **Adicione uma coluna na tabela chamada `Sem estoque` para armazenar se há o produto em estoque ou não (sugestão: use BOOLEAN ou VARCHAR – verdadeiro ou falso).**
 
 8. **Altere todos os registros, com exceção do ID 2, para identificar que está sem estoque.**
 
