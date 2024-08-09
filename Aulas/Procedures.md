@@ -78,3 +78,22 @@ DROP PROCEDURE IF EXISTS AumentarSalario;
 
 - [Documentação Oficial do MySQL sobre Procedimentos Armazenados](https://dev.mysql.com/doc/refman/8.0/en/create-procedure.html)
 - [Tutoriais e Exemplos de Procedimentos Armazenados](https://www.w3schools.com/sql/sql_stored_procedures.asp)
+
+
+## 📝 Exercícios Práticos
+
+Agora que você já conhece os conceitos básicos e viu um exemplo de procedimento armazenado, vamos colocar em prática com alguns exercícios. Esses exercícios ajudarão a reforçar o que foi aprendido, aplicando procedimentos armazenados em diferentes cenários.
+
+### 1. **🆕 Procedimento para Inserir Novo Empregado**
+
+Crie um procedimento armazenado para inserir um novo empregado na tabela `empregados`. 
+
+---
+
+### 2. **❌ Procedimento para Excluir Empregado**
+
+Crie um procedimento que permita a exclusão de um empregado com base no `empregados_id`. 
+
+### 3. **🔄 Procedimento para Atualizar Título de Empregado**
+
+Crie um procedimento que permita atualizar o título de um empregado na tabela `empregados` com base no `empregados_id`.
