@@ -32,7 +32,8 @@ BEGIN
     FROM empregados
     JOIN cargos ON empregados.titulo = cargos.titulo AND empregados.departamento_id = cargos.departamento_id
     WHERE empregados.empregados_id = emp_id;
-
+    LIMIT 1; -- Garante que apenas um salário seja retornado
+    
     -- Retorna o salário
     RETURN salario1;
 END //
