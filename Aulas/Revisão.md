@@ -4,7 +4,7 @@
 Crie um banco de dados do zero e execute os seguintes exercícios. Cada item deve ser realizado em seu banco de dados recém-criado. Não forneça as respostas; apenas execute as consultas e atividades conforme solicitado.
 
 ## 1. Criação do Banco de Dados
-1. Crie um banco de dados chamado `revisao_bd`.
+1. Crie um banco de dados chamado `revisao_` + seu nome.
 
 ## 2. Criação de Tabelas
 2. Crie uma tabela chamada `clientes` com as colunas: `id` (inteiro, chave primária, auto-incremento), `nome` (texto), `email` (texto), `telefone` (texto), `data_cadastro` (data).
