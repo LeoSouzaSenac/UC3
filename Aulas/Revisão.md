@@ -1,8 +1,7 @@
 # Exercícios de Revisão de Banco de Dados
 
 ## Instruções
-Crie um banco de dados do zero e execute os seguintes exercícios. Cada item deve ser realizado em seu banco de dados recém-criado. Não forneça as respostas; apenas execute as consultas e atividades conforme solicitado.
-
+Crie um banco de dados do zero e execute os seguintes exercícios. Cada item deve ser realizado em seu banco de dados recém-criado.
 ## 1. Criação do Banco de Dados
 1. Crie um banco de dados chamado `revisao_` + seu nome.
 
