@@ -16,36 +16,76 @@ Além disso, triggers podem ser definidas para serem executadas **antes** (`BEFO
 
 ### Exemplos Práticos com Tabelas
 
-Vamos usar as seguintes tabelas como exemplo: `empregados`, `departamentos`, e `cargos`.
+## Exemplo Prático: RPG
+
+Neste exemplo, vamos criar um sistema básico de RPG onde, ao avançar de nível, os atributos de um jogador (como força e agilidade) são automaticamente incrementados.
+
+### Passo 1: Criação das Tabelas
+
+Primeiro, criamos a tabela `Jogadores`, que armazenará informações sobre cada jogador, e a tabela `Níveis`, que define os atributos ganhos a cada nível.
+
+```sql
+CREATE TABLE Niveis (
+    nivel INT PRIMARY KEY,
+    descricao VARCHAR(50),
+    bonus_forca INT,
+    bonus_agilidade INT
+);
+
+CREATE TABLE Jogadores (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(100),
+    nivel INT,
+    forca INT,
+    agilidade INT,
+    FOREIGN KEY (nivel) REFERENCES Niveis(nivel)
+);
+```
+
+### Agora, inserimos alguns níveis e também jogadores.
+
+```sql
+INSERT INTO Niveis (nivel, descricao, bonus_forca, bonus_agilidade) VALUES
+(1, 'Iniciante', 1, 1),
+(2, 'Veterano', 2, 2),
+(3, 'Guerreiro', 3, 3),
+(4, 'Mestre', 4, 4);
+
+INSERT INTO Jogadores (nome, nivel, forca, agilidade) VALUES
+('Arthur', 1, 10, 10),
+('Lancelot', 1, 12, 8);
+```
 
 #### 1. Trigger para Atualizar o Salário de Empregados
 
-Vamos criar uma trigger que atualiza automaticamente o salário de um empregado na tabela `empregados` quando o título do cargo for alterado.
+Vamos criar uma trigger que atualiza automaticamente os atributos do jogador quando ele sobe de nível.
 
 ```sql
-CREATE TRIGGER AtualizarSalarioEmpregado
-AFTER UPDATE ON empregados
+CREATE TRIGGER Atualizar_Atributos
+AFTER UPDATE ON Jogadores
 FOR EACH ROW
 BEGIN
-    DECLARE novo_salario DECIMAL(10,2);
-    
-    SELECT salario INTO novo_salario
-    FROM cargos
-    WHERE titulo = NEW.titulo;
-    
-    UPDATE empregados
-    SET salario = novo_salario
-    WHERE empregados_id = NEW.empregados_id;
+    IF NEW.nivel > OLD.nivel THEN
+        UPDATE Jogadores
+        SET forca = forca + (SELECT bonus_forca FROM Niveis WHERE nivel = NEW.nivel),
+            agilidade = agilidade + (SELECT bonus_agilidade FROM Niveis WHERE nivel = NEW.nivel)
+        WHERE id = NEW.id;
+    END IF;
 END;
 ```
 
 **Explicação:**
 
-- **`AFTER UPDATE`**: A trigger será acionada após a atualização de uma linha na tabela `empregados`.
-- **`FOR EACH ROW`**: A trigger será aplicada a cada linha que for atualizada.
-- **`DECLARE novo_salario`**: Uma variável é declarada para armazenar o novo salário.
-- **`SELECT salario INTO novo_salario`**: O salário correspondente ao novo título do cargo é selecionado da tabela `cargos`.
-- **`UPDATE empregados SET salario`**: O salário do empregado é atualizado na tabela `empregados`.
+- **CREATE TRIGGER Atualizar_Atributos**: Esta linha inicia a criação de uma trigger chamada Atualizar_Atributos. A trigger será ativada automaticamente quando um evento específico ocorrer na tabela Jogadores.
+- **AFTER UPDATE ON Jogadores**: Define que a trigger será executada após (AFTER) uma operação de UPDATE ocorrer na tabela Jogadores. Isso significa que a trigger só será acionada depois que os dados na tabela Jogadores forem atualizados.
+- **FOR EACH ROW**: Especifica que a trigger será aplicada a cada linha que for afetada pela operação de UPDATE. Isso é útil em caso de atualizações que afetam várias linhas ao mesmo tempo.
+- **BEGIN**: Inicia o bloco de código da trigger. Tudo que está entre BEGIN e END será executado quando a trigger for acionada.
+- **IF NEW.nivel > OLD.nivel THEN**: Verifica se o valor do campo nivel na nova versão da linha (NEW.nivel) é maior do que o valor do nivel na versão antiga da linha (OLD.nivel). Em outras palavras, verifica se o jogador subiu de nível. Se a condição for verdadeira, o código dentro do bloco IF será executado.
+- **UPDATE Jogadores**: Atualiza a tabela Jogadores.
+- **SET forca = forca + (SELECT bonus_forca FROM Niveis WHERE nivel = NEW.nivel), agilidade = agilidade + (SELECT bonus_agilidade FROM Niveis WHERE nivel = NEW.nivel)**: Incrementa os atributos forca e agilidade do jogador, somando os valores de bônus (bonus_forca e bonus_agilidade) que correspondem ao novo nível do jogador (NEW.nivel). Os valores de bônus são obtidos da tabela Niveis.
+- **WHERE id = NEW.id**: Garante que a atualização seja feita somente para o jogador que teve o nível atualizado. O NEW.id refere-se ao id do jogador na linha que foi modificada.
+- **END IF**: Finaliza o bloco IF. Nenhum código dentro deste bloco será executado se a condição NEW.nivel > OLD.nivel não for atendida (ou seja, se o jogador não subiu de nível).
+- **END**: Finaliza o bloco de código da trigger. A partir deste ponto, a execução da trigger termina.
 
 #### 2. Trigger para Registrar Mudanças de Departamento
 
