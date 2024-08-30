@@ -104,7 +104,8 @@ DELIMITER ;
 
 UPDATE Jogadores
 SET nivel = 2
-WHERE id = 2;
+WHERE id = 1;
+
 
 ```
 
