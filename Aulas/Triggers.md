@@ -101,16 +101,80 @@ DELIMITER ;
 
 **Explicação:**
 
-- **CREATE TRIGGER Atualizar_Atributos**: Esta linha inicia a criação de uma trigger chamada Atualizar_Atributos. A trigger será ativada automaticamente quando um evento específico ocorrer na tabela Jogadores.
-- **AFTER UPDATE ON Jogadores**: Define que a trigger será executada após (AFTER) uma operação de UPDATE ocorrer na tabela Jogadores. Isso significa que a trigger só será acionada depois que os dados na tabela Jogadores forem atualizados.
-- **FOR EACH ROW**: Especifica que a trigger será aplicada a cada linha que for afetada pela operação de UPDATE. Isso é útil em caso de atualizações que afetam várias linhas ao mesmo tempo.
-- **BEGIN**: Inicia o bloco de código da trigger. Tudo que está entre BEGIN e END será executado quando a trigger for acionada.
-- **IF NEW.nivel > OLD.nivel THEN**: Verifica se o valor do campo nivel na nova versão da linha (NEW.nivel) é maior do que o valor do nivel na versão antiga da linha (OLD.nivel). Em outras palavras, verifica se o jogador subiu de nível. Se a condição for verdadeira, o código dentro do bloco IF será executado.
-- **UPDATE Jogadores**: Atualiza a tabela Jogadores.
-- **SET forca = forca + (SELECT bonus_forca FROM Niveis WHERE nivel = NEW.nivel), agilidade = agilidade + (SELECT bonus_agilidade FROM Niveis WHERE nivel = NEW.nivel)**: Incrementa os atributos forca e agilidade do jogador, somando os valores de bônus (bonus_forca e bonus_agilidade) que correspondem ao novo nível do jogador (NEW.nivel). Os valores de bônus são obtidos da tabela Niveis.
-- **WHERE id = NEW.id**: Garante que a atualização seja feita somente para o jogador que teve o nível atualizado. O NEW.id refere-se ao id do jogador na linha que foi modificada.
-- **END IF**: Finaliza o bloco IF. Nenhum código dentro deste bloco será executado se a condição NEW.nivel > OLD.nivel não for atendida (ou seja, se o jogador não subiu de nível).
-- **END**: Finaliza o bloco de código da trigger. A partir deste ponto, a execução da trigger termina.
+Claro, vou reexplicar a trigger `Atualizar_Atributos` com base na alteração que você fez e na explicação fornecida. Aqui está uma explicação detalhada de cada parte do código da trigger, considerando a versão modificada:
+
+### Trigger `Atualizar_Atributos`
+
+```sql
+DELIMITER //
+
+CREATE TRIGGER Atualizar_Atributos
+AFTER UPDATE ON Jogadores
+FOR EACH ROW
+BEGIN
+    IF NEW.nivel > OLD.nivel THEN
+        UPDATE Atributos_Jogadores
+        JOIN Niveis ON Jogadores.nivel = Niveis.nivel
+        SET Atributos_Jogadores.forca = Atributos_Jogadores.forca + Niveis.bonus_forca,
+            Atributos_Jogadores.agilidade = Atributos_Jogadores.agilidade + Niveis.bonus_agilidade
+        WHERE Atributos_Jogadores.jogador_id = NEW.id;
+    END IF;
+END//
+
+DELIMITER ;
+```
+
+### Explicação Detalhada
+
+1. **DELIMITER //**
+   - Altera o delimitador de comandos SQL de padrão (`;`) para `//`. Isso é necessário para definir blocos de código de triggers e stored procedures que contêm múltiplos comandos SQL.
+   
+2. **CREATE TRIGGER Atualizar_Atributos**
+   - Inicia a criação de uma nova trigger chamada `Atualizar_Atributos`.
+
+3. **AFTER UPDATE ON Jogadores**
+   - Especifica que a trigger será executada após (AFTER) a operação de UPDATE na tabela `Jogadores`.
+   - Isso significa que o código da trigger será acionado apenas depois que uma linha na tabela `Jogadores` for atualizada.
+
+4. **FOR EACH ROW**
+   - Define que a trigger deve ser aplicada a cada linha afetada pela operação de UPDATE.
+   - Se a operação de UPDATE afeta várias linhas, a trigger será executada para cada linha individualmente.
+
+5. **BEGIN**
+   - Inicia o bloco de código da trigger. Tudo o que está entre `BEGIN` e `END` será executado quando a trigger for acionada.
+
+6. **IF NEW.nivel > OLD.nivel THEN**
+   - Verifica se o nível (`nivel`) na nova versão da linha (`NEW.nivel`) é maior do que o nível na versão antiga da linha (`OLD.nivel`).
+   - A condição `NEW.nivel > OLD.nivel` garante que o código dentro do bloco `IF` só será executado se o nível do jogador tiver aumentado.
+
+7. **UPDATE Atributos_Jogadores**
+   - Atualiza a tabela `Atributos_Jogadores`, que contém os atributos (`forca` e `agilidade`) dos jogadores.
+   
+8. **JOIN Niveis ON Jogadores.nivel = Niveis.nivel**
+   - Faz um JOIN entre a tabela `Atributos_Jogadores` e a tabela `Niveis`.
+   - **Explicação**: O JOIN é utilizado para obter os valores de bônus (`bonus_forca` e `bonus_agilidade`) correspondentes ao novo nível do jogador (`NEW.nivel`).
+
+9. **SET Atributos_Jogadores.forca = Atributos_Jogadores.forca + Niveis.bonus_forca,
+            Atributos_Jogadores.agilidade = Atributos_Jogadores.agilidade + Niveis.bonus_agilidade**
+   - **Objetivo**: Atualiza os atributos `forca` e `agilidade` na tabela `Atributos_Jogadores`.
+   - **Explicação**: Os atributos são incrementados pelos bônus associados ao novo nível (`Niveis.bonus_forca` e `Niveis.bonus_agilidade`).
+
+10. **WHERE Atributos_Jogadores.jogador_id = NEW.id;**
+    - **Objetivo**: Garante que a atualização seja aplicada somente ao jogador que teve o nível alterado.
+    - **Explicação**: `NEW.id` refere-se ao ID do jogador na linha que foi atualizada, garantindo que apenas o jogador específico seja afetado pela atualização dos atributos.
+
+11. **END IF**
+    - **Objetivo**: Finaliza o bloco `IF`. O código dentro desse bloco só será executado se a condição `NEW.nivel > OLD.nivel` for verdadeira.
+
+12. **END**
+    - **Objetivo**: Finaliza o bloco de código da trigger. Após este ponto, a execução da trigger termina.
+
+13. **DELIMITER ;**
+    - **Objetivo**: Restaura o delimitador padrão (`;`). Após a definição da trigger, o delimitador é revertido para o padrão para comandos SQL subsequentes.
+
+### Resumo
+
+A trigger `Atualizar_Atributos` é projetada para atualizar automaticamente os atributos de um jogador na tabela `Atributos_Jogadores` sempre que o nível do jogador na tabela `Jogadores` é aumentado. Ela faz isso verificando se o nível foi elevado e, em caso afirmativo, ajusta os valores dos atributos com base nos bônus associados ao novo nível.
 
 #### 2. Trigger para Registrar Mudanças de Departamento
 
