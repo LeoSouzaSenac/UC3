@@ -98,6 +98,17 @@ END//
 DELIMITER ;
 ```
 
+### Agora, faça um update na tabela Jogadores, para disparar o trigger:
+
+```sql
+
+UPDATE Jogadores
+SET nivel = 2
+WHERE nivel = 2;
+
+```
+
+
 ### Explicação Detalhada
 
 1. **DELIMITER //**
