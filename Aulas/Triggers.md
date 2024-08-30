@@ -25,6 +25,7 @@ Neste exemplo, vamos criar um sistema básico de RPG onde, ao avançar de nível
 Primeiro, criamos a tabela `Jogadores`, que armazenará informações sobre cada jogador, e a tabela `Níveis`, que define os atributos ganhos a cada nível.
 
 ```sql
+-- Tabela Niveis
 CREATE TABLE Niveis (
     nivel INT PRIMARY KEY,
     descricao VARCHAR(50),
@@ -32,28 +33,44 @@ CREATE TABLE Niveis (
     bonus_agilidade INT
 );
 
+-- Tabela Jogadores
 CREATE TABLE Jogadores (
     id INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100),
     nivel INT,
-    forca INT,
-    agilidade INT,
     FOREIGN KEY (nivel) REFERENCES Niveis(nivel)
 );
+
+-- Tabela Atributos_Jogadores
+CREATE TABLE Atributos_Jogadores (
+    jogador_id INT PRIMARY KEY,
+    forca INT,
+    agilidade INT,
+    FOREIGN KEY (jogador_id) REFERENCES Jogadores(id)
+);
+
 ```
 
 ### Agora, inserimos alguns níveis e também jogadores.
 
 ```sql
+-- Inserir dados na tabela Niveis
 INSERT INTO Niveis (nivel, descricao, bonus_forca, bonus_agilidade) VALUES
 (1, 'Iniciante', 1, 1),
 (2, 'Veterano', 2, 2),
 (3, 'Guerreiro', 3, 3),
 (4, 'Mestre', 4, 4);
 
-INSERT INTO Jogadores (nome, nivel, forca, agilidade) VALUES
-('Arthur', 1, 10, 10),
-('Lancelot', 1, 12, 8);
+-- Inserir dados na tabela Jogadores
+INSERT INTO Jogadores (nome, nivel) VALUES
+('Arthur', 1),
+('Lancelot', 1);
+
+-- Inserir dados na tabela Atributos_Jogadores
+INSERT INTO Atributos_Jogadores (jogador_id, forca, agilidade) VALUES
+(1, 10, 10),
+(2, 12, 8);
+
 ```
 
 #### 1. Trigger para Atualizar o Atributo quando sobre de nível
@@ -69,14 +86,16 @@ AFTER UPDATE ON Jogadores
 FOR EACH ROW
 BEGIN
     IF NEW.nivel > OLD.nivel THEN
-        UPDATE Jogadores
-        SET forca = forca + (SELECT bonus_forca FROM Niveis WHERE nivel = NEW.nivel),
-            agilidade = agilidade + (SELECT bonus_agilidade FROM Niveis WHERE nivel = NEW.nivel)
-        WHERE id = NEW.id;
+        UPDATE Atributos_Jogadores aj
+        JOIN Niveis n ON NEW.nivel = n.nivel
+        SET aj.forca = aj.forca + n.bonus_forca,
+            aj.agilidade = aj.agilidade + n.bonus_agilidade
+        WHERE aj.jogador_id = NEW.id;
     END IF;
 END//
 
 DELIMITER ;
+
 
 ```
 
