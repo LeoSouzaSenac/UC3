@@ -61,6 +61,9 @@ INSERT INTO Jogadores (nome, nivel, forca, agilidade) VALUES
 Vamos criar uma trigger que atualiza automaticamente os atributos do jogador quando ele sobe de nível.
 
 ```sql
+
+DELIMITER //
+
 CREATE TRIGGER Atualizar_Atributos
 AFTER UPDATE ON Jogadores
 FOR EACH ROW
@@ -71,7 +74,10 @@ BEGIN
             agilidade = agilidade + (SELECT bonus_agilidade FROM Niveis WHERE nivel = NEW.nivel)
         WHERE id = NEW.id;
     END IF;
-END;
+END//
+
+DELIMITER ;
+
 ```
 
 **Explicação:**
@@ -92,6 +98,9 @@ END;
 Vamos criar uma trigger para registrar em uma tabela de auditoria (`auditoria_departamento`) toda vez que um empregado mudar de departamento.
 
 ```sql
+
+DELIMITER //
+
 CREATE TRIGGER RegistrarMudancaDepartamento
 AFTER UPDATE ON empregados
 FOR EACH ROW
@@ -101,6 +110,9 @@ BEGIN
         VALUES (NEW.empregados_id, OLD.departamento_id, NEW.departamento_id, NOW());
     END IF;
 END;
+
+DELIMITER ;
+
 ```
 
 **Explicação:**
