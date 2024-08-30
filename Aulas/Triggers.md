@@ -77,32 +77,6 @@ INSERT INTO Atributos_Jogadores (jogador_id, forca, agilidade) VALUES
 
 Vamos criar uma trigger que atualiza automaticamente os atributos do jogador quando ele sobe de nível.
 
-```sql
-
-DELIMITER //
-
-CREATE TRIGGER Atualizar_Atributos
-AFTER UPDATE ON Jogadores
-FOR EACH ROW
-BEGIN
-    IF NEW.nivel > OLD.nivel THEN
-        UPDATE Atributos_Jogadores aj
-        JOIN Niveis n ON NEW.nivel = n.nivel
-        SET aj.forca = aj.forca + n.bonus_forca,
-            aj.agilidade = aj.agilidade + n.bonus_agilidade
-        WHERE aj.jogador_id = NEW.id;
-    END IF;
-END//
-
-DELIMITER ;
-
-
-```
-
-**Explicação:**
-
-Claro, vou reexplicar a trigger `Atualizar_Atributos` com base na alteração que você fez e na explicação fornecida. Aqui está uma explicação detalhada de cada parte do código da trigger, considerando a versão modificada:
-
 ### Trigger `Atualizar_Atributos`
 
 ```sql
