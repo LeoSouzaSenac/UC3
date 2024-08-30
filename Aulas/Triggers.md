@@ -56,7 +56,7 @@ INSERT INTO Jogadores (nome, nivel, forca, agilidade) VALUES
 ('Lancelot', 1, 12, 8);
 ```
 
-#### 1. Trigger para Atualizar o Salário de Empregados
+#### 1. Trigger para Atualizar o Atributo quando sobre de nível
 
 Vamos criar uma trigger que atualiza automaticamente os atributos do jogador quando ele sobe de nível.
 
