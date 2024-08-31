@@ -164,8 +164,22 @@ A trigger `Atualizar_Atributos` é projetada para atualizar automaticamente os a
 
 #### 2. Trigger para Registrar Mudanças de Departamento
 
-Vamos criar uma trigger para registrar em uma tabela de auditoria (`auditoria_departamento`) toda vez que um empregado mudar de departamento.
+Vamos criar uma trigger para registrar em uma tabela de auditoria (`auditoria_departamento`) toda vez que um empregado mudar de departamento. Primeiro, precisamos criar esta tabela (use seu banco de dados empresa_seunome). A tabela auditoria_departamento serve para registrar e monitorar as mudanças de departamento dos empregados em uma empresa. Ela é útil para diversos propósitos relacionados à auditoria, controle e análise dos movimentos dentro da organização. É comum usar triggers para isso.
 
+```sql
+CREATE TABLE auditoria_departamento (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    empregados_id INT,
+    antigo_departamento INT,
+    novo_departamento INT,
+    data_mudanca DATETIME,
+    FOREIGN KEY (empregados_id) REFERENCES empregados(id),
+    FOREIGN KEY (antigo_departamento) REFERENCES departamentos(id),
+    FOREIGN KEY (novo_departamento) REFERENCES departamentos(id)
+);
+
+```
+Agora, vamos criar a trigger:
 ```sql
 
 DELIMITER //
