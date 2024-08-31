@@ -88,7 +88,7 @@ FOR EACH ROW
 BEGIN
     IF NEW.nivel > OLD.nivel THEN
         UPDATE Atributos_Jogadores
-        JOIN Niveis ON Jogadores.nivel = Niveis.nivel
+        JOIN Niveis ON NEW.nivel = Niveis.nivel
         SET Atributos_Jogadores.forca = Atributos_Jogadores.forca + Niveis.bonus_forca,
             Atributos_Jogadores.agilidade = Atributos_Jogadores.agilidade + Niveis.bonus_agilidade
         WHERE Atributos_Jogadores.jogador_id = NEW.id;
