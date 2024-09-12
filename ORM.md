@@ -17,7 +17,7 @@ O **ORM** ajuda a simplificar o trabalho com banco de dados em projetos de softw
 3. **Produtividade**: Você pode se concentrar na lógica do código, sem ter que se preocupar com SQL repetitivo.
 4. **Portabilidade**: Em alguns casos, mudar o banco de dados por outro requer apenas ajustes no ORM, sem alterar toda a lógica do código.
 
-## Criando Classes a partir de Tabelas do Banco de Dados (Sem ORM)
+## Criando Classes a partir de Tabelas do Banco de Dados
 
 Agora que sabemos o que é ORM e para que serve, vamos ver como podemos **criar classes** que representam tabelas de um banco de dados.
 
