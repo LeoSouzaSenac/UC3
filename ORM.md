@@ -70,42 +70,77 @@ const usuario1 = new Usuario(1, 'Maria', 'maria@email.com', 25);
 console.log(usuario1.nome); // Saída: Maria
 ```
 
-### Relacionando Tabelas
+Sim, você está absolutamente correto! Usar a **classe** correspondente à tabela referenciada como o tipo da propriedade que representa a **foreign key** torna o código mais intuitivo e estruturado. Em vez de apenas armazenar o ID da outra tabela como um número, você pode associar a classe inteira. Isso melhora a organização e permite acessar facilmente os dados relacionados.
 
-Se tivermos outra tabela no banco de dados, como `Pedidos`, que armazena os pedidos feitos pelos usuários, podemos criar outra classe para representá-la e, assim, fazer uma relação entre as tabelas no código.
+Vou explicar essa abordagem com um exemplo prático.
 
-#### Exemplo de Tabela de Pedidos:
+### Relacionamento de Tabelas Usando Classes
 
-| id  | descricao       | valor | usuarioId |
-| --- | --------------- | ----- | --------- |
-| 1   | Produto A       | 100   | 1         |
-| 2   | Produto B       | 200   | 1         |
+#### 1. Exemplo de Tabelas no Banco de Dados
 
-Aqui, a coluna `usuarioId` relaciona o pedido a um usuário da tabela `Usuarios`.
+Imagine que temos duas tabelas no banco de dados:
 
-#### Classe `Pedido` em TypeScript:
+- **Tabela `Usuarios`**:
+  | id  | nome     | email            |
+  | --- | -------- | ---------------- |
+  | 1   | Maria    | maria@email.com   |
+  | 2   | João     | joao@email.com    |
+
+- **Tabela `Pedidos`**:
+  | id  | descricao   | valor | usuarioId |
+  | --- | ----------- | ----- | --------- |
+  | 1   | Produto A   | 100   | 1         |
+  | 2   | Produto B   | 200   | 1         |
+
+Aqui, a coluna `usuarioId` na tabela `Pedidos` é uma **foreign key** que referencia a tabela `Usuarios`.
+
+#### 2. Criando as Classes
+
+Agora, vamos criar as classes `Usuario` e `Pedido` em TypeScript. A diferença aqui será que, em vez de armazenar apenas o `usuarioId` como um número na classe `Pedido`, usaremos a classe `Usuario` como tipo para representar o relacionamento.
 
 ```typescript
+// Classe Usuario
+class Usuario {
+  id: number;
+  nome: string;
+  email: string;
+
+  constructor(id: number, nome: string, email: string) {
+    this.id = id;
+    this.nome = nome;
+    this.email = email;
+  }
+}
+
+// Classe Pedido
 class Pedido {
   id: number;
   descricao: string;
   valor: number;
-  usuarioId: number;
+  usuario: Usuario; // Aqui usamos a classe Usuario, ao invés de um simples numero (usuarioId)
 
-  constructor(id: number, descricao: string, valor: number, usuarioId: number) {
+  constructor(id: number, descricao: string, valor: number, usuario: Usuario) {
     this.id = id;
     this.descricao = descricao;
     this.valor = valor;
-    this.usuarioId = usuarioId;
+    this.usuario = usuario; // Passamos o objeto Usuario como parâmetro
   }
 }
 ```
 
-#### Criando um Objeto `Pedido` Relacionado a um `Usuario`:
+### 3. Usando as Classes Relacionadas
+
+Agora podemos criar objetos dessas classes e ver como o relacionamento funciona na prática.
 
 ```typescript
-const pedido1 = new Pedido(1, 'Produto A', 100, usuario1.id);
+// Criando um objeto Usuario
+const usuario1 = new Usuario(1, 'Maria', 'maria@email.com');
+
+// Criando um objeto Pedido, passando o usuario1 como referência
+const pedido1 = new Pedido(1, 'Produto A', 100, usuario1);
+
 console.log(pedido1.descricao); // Saída: Produto A
+console.log(pedido1.usuario.nome); // Saída: Maria (acessando o nome do usuario relacionado)
 ```
 
 ### Conclusão
