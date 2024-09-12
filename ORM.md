@@ -139,6 +139,141 @@ console.log(pedido1.descricao); // Saída: Produto A
 console.log(pedido1.usuario.nome); // Saída: Maria (acessando o nome do usuario relacionado)
 ```
 
+# Métodos nas Classes ORM
+
+Métodos são funções que pertencem a uma classe e servem para realizar operações sobre os dados armazenados nas propriedades da classe. Eles podem ser usados para manipular dados, fazer cálculos ou obter informações específicas de cada instância da classe.
+
+Neste momento, nosso objetivo é **apenas criar e nomear métodos** nas classes baseadas nas tabelas do banco de dados. Não vamos implementar a lógica completa dos métodos ainda. Em vez disso, vamos entender quais tipos de métodos seriam úteis e como nomeá-los adequadamente.
+
+## Estrutura Básica de um Método
+
+Um método em uma classe segue a seguinte estrutura básica:
+
+```typescript
+class ClasseExemplo {
+  propriedade: string;
+
+  constructor(propriedade: string) {
+    this.propriedade = propriedade;
+  }
+
+  // Nome do método
+  nomeDoMetodo(): void {
+    // Aqui vai a lógica que o método deve executar
+    // Neste caso, vamos apenas comentar o que o método deve fazer
+  }
+}
+```
+
+### Regras para Nomear Métodos
+
+- O nome de um método deve **descrever claramente** o que ele faz.
+- Use verbos de ação, como `adicionar`, `remover`, `buscar`, `atualizar`.
+- Mantenha o nome dos métodos **simples e direto**.
+
+### Criando Métodos para Operações Comuns
+
+Agora vamos criar métodos comuns que seriam úteis em uma aplicação baseada em tabelas de banco de dados. Vamos usar dois exemplos de classes:
+
+- **`Usuario`**: Representa a tabela de usuários.
+- **`Pedido`**: Representa a tabela de pedidos.
+
+### Exemplo: Classe `Usuario`
+
+Abaixo está um exemplo da classe `Usuario` com alguns métodos. Note que não estamos implementando a lógica dentro dos métodos, apenas comentando o que cada método faria.
+
+```typescript
+class Usuario {
+  id: number;
+  nome: string;
+  email: string;
+
+  constructor(id: number, nome: string, email: string) {
+    this.id = id;
+    this.nome = nome;
+    this.email = email;
+  }
+
+  // Método para retornar uma saudação ao usuário
+  saudarUsuario(): void {
+    // Aqui retornaríamos uma saudação personalizada para o usuário
+    // Exemplo: "Olá, Maria!"
+  }
+
+  // Método para verificar se o email do usuário é válido
+  validarEmail(): boolean {
+    // Aqui verificaríamos se o email do usuário segue um padrão correto
+    // Exemplo de padrão: "usuario@dominio.com"
+    return true; // Placeholder
+  }
+
+  // Método para atualizar o nome do usuário
+  atualizarNome(novoNome: string): void {
+    // Aqui iríamos atualizar o nome do usuário com o novoNome fornecido
+    this.nome = novoNome;
+  }
+}
+```
+
+### Exemplo: Classe `Pedido`
+
+Agora, veja um exemplo de como criar métodos na classe `Pedido`. Mais uma vez, não estamos implementando a lógica dos métodos, apenas comentando o que cada um deveria fazer.
+
+```typescript
+class Pedido {
+  id: number;
+  descricao: string;
+  valor: number;
+  usuario: Usuario; // Referência à classe Usuario
+
+  constructor(id: number, descricao: string, valor: number, usuario: Usuario) {
+    this.id = id;
+    this.descricao = descricao;
+    this.valor = valor;
+    this.usuario = usuario;
+  }
+
+  // Método para calcular o valor total do pedido com base em possíveis descontos
+  calcularValorTotal(): number {
+    // Aqui calcularíamos o valor total do pedido, talvez aplicando um desconto
+    // Retornaria o valor atualizado
+    return this.valor; // Placeholder
+  }
+
+  // Método para adicionar um produto ao pedido
+  adicionarProduto(descricaoProduto: string, valorProduto: number): void {
+    // Aqui adicionaríamos um novo produto ao pedido
+    // Talvez aumentando o valor total do pedido
+  }
+
+  // Método para associar um usuário ao pedido
+  associarUsuario(usuario: Usuario): void {
+    // Aqui associaríamos o usuário (quem fez o pedido) ao pedido
+    this.usuario = usuario;
+  }
+}
+```
+
+## O Que Pensar ao Criar Métodos
+
+Aqui estão algumas perguntas que você pode se fazer ao criar os métodos:
+
+1. **O que a classe faz?**  
+   Exemplo: Se a classe `Usuario` representa um usuário, quais ações um usuário pode realizar ou sofrer? Como por exemplo: validar o email, atualizar informações, etc.
+
+2. **Quais ações são comuns para os dados que a classe representa?**  
+   Exemplo: Na classe `Pedido`, podemos imaginar ações como "adicionar produto", "calcular total", "associar usuário", pois são operações comuns de um pedido.
+
+3. **Existe alguma lógica de negócio que precisa ser encapsulada na classe?**  
+   Exemplo: Métodos para cálculos de preço ou aplicação de descontos são exemplos de lógica de negócio.
+
+4. **Como posso nomear os métodos de forma clara?**  
+   Sempre tente descrever o que o método faz no nome, usando verbos como `calcular`, `adicionar`, `atualizar`, etc.
+
+```
+
+
+
 ### Conclusão
 
 Neste exemplo, vimos como transformar tabelas de um banco de dados em classes de TypeScript. Ao criar as classes, você pode modelar seus dados diretamente no código. Essa prática de mapeamento de tabelas para classes é a base do ORM, mas você pode aplicá-la de forma manual sem usar ferramentas específicas de ORM como o TypeORM.
