@@ -70,10 +70,6 @@ const usuario1 = new Usuario(1, 'Maria', 'maria@email.com', 25);
 console.log(usuario1.nome); // Saída: Maria
 ```
 
-Sim, você está absolutamente correto! Usar a **classe** correspondente à tabela referenciada como o tipo da propriedade que representa a **foreign key** torna o código mais intuitivo e estruturado. Em vez de apenas armazenar o ID da outra tabela como um número, você pode associar a classe inteira. Isso melhora a organização e permite acessar facilmente os dados relacionados.
-
-Vou explicar essa abordagem com um exemplo prático.
-
 ### Relacionamento de Tabelas Usando Classes
 
 #### 1. Exemplo de Tabelas no Banco de Dados
