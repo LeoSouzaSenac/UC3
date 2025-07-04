@@ -22,7 +22,7 @@ Sua missão é criar uma tabela chamada `guerreiros` com as seguintes colunas:
 
 2. Mostre os guerreiros que são do **Universo 7**.
 
-3. Mostre apenas os nomes dos guerreiros com **poder de luta acima de 9000**.
+3. Mostre apenas os nomes dos guerreiros com **poder de luta acima de 8000**.
 
 
 💡 **Desafio extra**: adicione um campo `transformacao` (VARCHAR) com valores como "Super Saiyajin", "Base", "Golden", etc., e filtre quem está transformado.
