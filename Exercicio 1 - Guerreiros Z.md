@@ -1,4 +1,4 @@
-# 🐉 Exercício MySQL: "Guerrreiros Z – Banco de Dados do Torneio do Poder"
+# 🐉 Exercício MySQL: "Guerreiros Z – Banco de Dados do Torneio do Poder"
 
 Sua missão é criar uma tabela chamada `guerreiros` com as seguintes colunas:
 
