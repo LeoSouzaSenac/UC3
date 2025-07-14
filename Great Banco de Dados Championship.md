@@ -46,10 +46,6 @@ Seu banco de dados precisa conter:
 
 Após inserir os dados no banco, você deverá criar **consultas** que respondam às perguntas abaixo:
 
-Claro! Abaixo estão as **mesmas perguntas** reformuladas de forma mais **didática**, para que seus alunos entendam **claramente o que devem buscar em cada consulta**, mesmo sem ver o código SQL:
-
----
-
 ### 🧍‍♂️ 1. **Quais são os jogadores e a qual grupo cada um pertence?**
 
 ➡️ Verifique a tabela de **jogadores** e veja **a que grupo cada um está associado**.
