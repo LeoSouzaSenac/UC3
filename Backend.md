@@ -132,7 +132,16 @@ connection.connect(error => {
 * `connect` tenta se conectar ao banco
 * `error`: se existir, algo deu errado
 * `connection.threadId`: ID da conexão ativa
+* 
+- `connection.connect(...)` → função da biblioteca `mysql2` que **inicia a conexão** com o banco.
+- Recebe como argumento uma **função de callback** — ou seja, uma função que será executada **depois** que o banco de dados **responder**.
+- Essa função recebe um **parâmetro `error`**.
 
+Se error for verdadeiro (ou seja, se houve erro), mostramos no console com:
+console.error('Erro ao conectar ao banco de dados: ' + error.stack);
+error.stack: mostra uma descrição detalhada do erro (tipo, mensagem, rastreamento).
+
+connection.threadId`: é um identificador único da conexão com o banco (é como um "protocolo de atendimento" que o banco gera para cada nova conexão).
 ---
 
 ## 🌐 Rotas (Endpoints)
