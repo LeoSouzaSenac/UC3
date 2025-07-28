@@ -168,6 +168,324 @@ app.post('/usuarios', (req, res) => {
 * `?`: evita SQL Injection (substituído pelos valores no array `[nome, email, senha]`)
 * `res.status(201)`: código HTTP para "criado com sucesso"
 
+
+## 🧠 O que esse trecho faz?
+
+Essa parte do código cria uma **rota HTTP POST** para **cadastrar um novo usuário** no banco de dados MySQL. Quando o cliente (por exemplo, um site ou app) envia um **JSON com nome, email e senha**, o backend:
+
+1. Recebe os dados
+2. Monta a instrução SQL
+3. Insere os dados na tabela `usuarios`
+4. Retorna uma resposta indicando sucesso ou erro
+
+---
+
+## 🧱 Explicação detalhada
+
+### 🔸 `app.post('/usuarios', (req, res) => { ... })`
+
+#### 🔹 `app.post(...)`
+
+* **`app`** é a nossa aplicação Express.
+* **`.post()`** define que essa rota aceita requisições **HTTP do tipo POST**.
+* O método POST é usado quando queremos **enviar dados para o servidor** (ex: cadastrar, criar).
+
+#### 🔹 `'/usuarios'`
+
+* Caminho da URL.
+* Quando um cliente envia uma requisição para `http://localhost:3000/usuarios` usando o método **POST**, essa função será executada.
+
+#### 🔹 `(req, res) => { ... }`
+
+* Esta é a **função de callback** que será executada quando essa rota for chamada.
+* **`req`** (request): objeto que contém todas as informações da requisição feita pelo cliente.
+* **`res`** (response): objeto usado para enviar uma resposta ao cliente.
+
+---
+
+### 🔸 `const { nome, email, senha } = req.body;`
+
+* Aqui estamos **desestruturando** o objeto `req.body`, que contém os dados enviados pelo cliente em formato JSON.
+* Se o corpo da requisição for:
+
+  ```json
+  {
+    "nome": "João",
+    "email": "joao@email.com",
+    "senha": "123456"
+  }
+  ```
+
+  então:
+
+  * `nome = "João"`
+  * `email = "joao@email.com"`
+  * `senha = "123456"`
+
+> ✨ `req.body` só funciona porque usamos `bodyParser.json()` lá no início do código.
+
+## 🧠 O que é desestruturação?
+
+**Desestruturação** (ou *destructuring*) é um recurso do JavaScript que permite **extrair valores diretamente de objetos** (ou arrays) e armazená-los em variáveis **com menos código**.
+
+---
+
+## 🧱 Situação sem desestruturação
+
+Imagine que recebemos o seguinte JSON enviado por um formulário (por exemplo, usando Thunder Client):
+
+```json
+{
+  "nome": "Lucas",
+  "email": "lucas@email.com",
+  "senha": "123456"
+}
+```
+
+Esse conteúdo vai estar dentro de `req.body`, ou seja:
+
+```js
+req.body = {
+  nome: "Lucas",
+  email: "lucas@email.com",
+  senha: "123456"
+}
+```
+
+Se **não usássemos desestruturação**, teríamos que escrever:
+
+```js
+const nome = req.body.nome;
+const email = req.body.email;
+const senha = req.body.senha;
+```
+
+---
+
+## ✅ Com desestruturação:
+
+A mesma coisa pode ser feita assim:
+
+```js
+const { nome, email, senha } = req.body;
+```
+
+Isso significa:
+
+> Pegue os campos `nome`, `email` e `senha` **do objeto `req.body`** e **crie variáveis com esses mesmos nomes**.
+
+---
+
+## 🧪 Exemplo didático
+
+### Dado:
+
+```js
+const aluno = {
+  nome: "Ana",
+  idade: 17,
+  curso: "Informática"
+};
+```
+
+### Sem desestruturação:
+
+```js
+const nome = aluno.nome;
+const idade = aluno.idade;
+const curso = aluno.curso;
+```
+
+### Com desestruturação:
+
+```js
+const { nome, idade, curso } = aluno;
+```
+
+> Agora temos 3 variáveis disponíveis: `nome`, `idade` e `curso`.
+
+---
+
+## 🔍 Aplicando no código:
+
+### Antes:
+
+```js
+app.post('/usuarios', (req, res) => {
+  const nome = req.body.nome;
+  const email = req.body.email;
+  const senha = req.body.senha;
+  ...
+});
+```
+
+### Com desestruturação:
+
+```js
+app.post('/usuarios', (req, res) => {
+  const { nome, email, senha } = req.body;
+  ...
+});
+```
+
+Mais limpo, mais organizado, **mais legível**.
+
+---
+
+## 🧠 Por que ensinar isso?
+
+* Desestruturação é **muito comum em código moderno**
+* Reduz repetição
+* Torna o código mais limpo e fácil de entender
+* Ajuda a **extrair apenas os campos que você precisa**
+
+---
+
+## ⚠️ Atenção
+
+Para que funcione:
+
+1. `req.body` **precisa ser um objeto**
+2. Os nomes devem **coincidir exatamente** (`nome`, `email`, `senha`)
+
+Se o campo não existir, o valor da variável será `undefined`.
+
+---
+
+## ✅ Conclusão
+
+| Código                              | O que faz                                               |
+| ----------------------------------- | ------------------------------------------------------- |
+| `const { nome } = req.body`         | Cria uma variável `nome` com o valor de `req.body.nome` |
+| `const { email, senha } = req.body` | Cria `email` e `senha` a partir de `req.body`           |
+| `const nome = req.body.nome`        | Maneira tradicional (mais verbosa)                      |
+
+---
+
+### 🔸 `const sql = 'INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)'`
+
+* Essa é uma **instrução SQL** do tipo `INSERT`, que serve para **inserir dados em uma tabela**.
+* `?` são **placeholders**, ou seja, lugares onde os valores reais vão ser colocados depois.
+
+  * Isso protege contra **SQL Injection** e é mais seguro do que montar o SQL com texto direto.
+
+---
+
+### 🔸 `connection.query(sql, [nome, email, senha], (error) => { ... })`
+
+Aqui executamos a instrução SQL no banco de dados.
+
+#### 🔹 `connection.query(...)`
+
+* Método usado para **executar comandos SQL** no banco de dados MySQL.
+
+#### 🔹 Parâmetros:
+
+| Parâmetro              | Função                                                                |
+| ---------------------- | --------------------------------------------------------------------- |
+| `sql`                  | O comando SQL a ser executado (`INSERT INTO ...`)                     |
+| `[nome, email, senha]` | Array com os valores que vão substituir os `?` na query               |
+| `(error) => { ... }`   | Callback que será executado depois que o banco responder (assíncrono) |
+
+#### 🔹 O que acontece:
+
+* O banco executa o `INSERT`.
+* Se houver algum erro (ex: email já existe), o `error` estará preenchido.
+* Se deu tudo certo, `error` será `null`.
+
+---
+
+### 🔸 Tratamento de erro
+
+```js
+if (error) return res.status(500).send('Erro ao adicionar usuário.');
+```
+
+* Verificamos se houve erro.
+* Se sim, retornamos:
+
+  * **status 500** → erro interno do servidor
+  * **mensagem** → 'Erro ao adicionar usuário.'
+* O `return` faz a função parar aqui, e **nada mais é executado**.
+
+---
+
+### 🔸 Resposta de sucesso
+
+```js
+res.status(201).send('Usuário adicionado com sucesso.');
+```
+
+* Enviamos uma resposta para o cliente com:
+
+  * **status 201** → criado com sucesso
+  * **mensagem** → 'Usuário adicionado com sucesso.'
+
+---
+
+## 🧪 Exemplo prático
+
+Imagine que você manda uma requisição POST com Thunder Client ou Postman:
+
+### 🔸 Rota
+
+```
+POST http://localhost:3000/usuarios
+```
+
+### 🔸 Corpo da requisição (JSON)
+
+```json
+{
+  "nome": "Ana",
+  "email": "ana@email.com",
+  "senha": "senha123"
+}
+```
+
+### 🔸 O que acontece:
+
+1. O backend recebe `req.body`
+2. Desestrutura os dados
+3. Monta a query:
+
+   ```sql
+   INSERT INTO usuarios (nome, email, senha) VALUES ('Ana', 'ana@email.com', 'senha123');
+   ```
+4. Executa no banco
+5. Retorna:
+
+   ```txt
+   Status: 201
+   Body: Usuário adicionado com sucesso.
+   ```
+
+---
+
+## 📌 Resumo visual
+
+```txt
+[Cliente (navegador ou app)]
+     ↓ envia POST + JSON
+[Express (servidor Node.js)]
+     ↓ lê req.body
+     ↓ monta e executa SQL
+[MySQL (banco de dados)]
+     ↓ responde OK
+[Express] → envia status 201 ao cliente
+```
+
+---
+
+## ✅ Conclusão
+
+Esse trecho de código:
+
+* Define uma rota POST em `/usuarios`
+* Recebe dados do corpo da requisição
+* Insere os dados na tabela `usuarios` do MySQL
+* Retorna sucesso (201) ou erro (500)
+
 ---
 
 ### 📥 GET `/usuarios`
